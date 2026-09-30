@@ -1,29 +1,21 @@
-name: My First CI Pipeline
+name: Node.js CI Pipeline
 
-# 1. Trigger: 
 on:
   push:
     branches: [ "main" ]
 
-# 2. Jobs: 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest  
+  run-tests:
+    runs-on: ubuntu-latest
 
     steps:
-      # Step 1: (Checkout)
-      - name: Checkout repository code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2:Build  simulate 
-      - name: Run a build step
-        run: |
-          echo "Building the application..."
-          echo "Build finished successfully!"
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-      # Step 3: Test 
       - name: Run automated test
-        run: |
-          echo "Running unit tests..."
-          echo "All tests passed!"
-          exit 1
+        run: npm test
